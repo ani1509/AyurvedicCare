@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+        @apply bg-gray-50 text-gray-900;
+    }
+}
+
+@layer components {
+    .btn-primary {
+        @apply bg-ayurvedic-500 hover:bg-ayurvedic-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-ayurvedic-500 focus:ring-offset-2;
+    }
+
+    .btn-secondary {
+        @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+    }
+
+    .btn-outline {
+        @apply border border-ayurvedic-500 text-ayurvedic-500 font-medium py-2 px-4 rounded-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-ayurvedic-500 focus:ring-offset-2;
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-outline:hover {
+        @apply bg-ayurvedic-500 text-white border-ayurvedic-500;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(245, 101, 38, 0.3);
+    }
+
+    .btn-outline:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 15px rgba(245, 101, 38, 0.2);
+    }
+
+    .input-field {
+        @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-ayurvedic-500 focus:border-transparent;
+    }
+
+    /* Enhanced select styling to prevent black flash */
+    select.input-field {
+        @apply bg-white appearance-none cursor-pointer;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+    }
+
+    select.input-field:focus {
+        @apply border-ayurvedic-500;
+    }
+
+    select.input-field option {
+        @apply bg-white text-gray-900;
+    }
+
+    select.input-field option:hover {
+        @apply bg-ayurvedic-50;
+    }
+
+    /* Prevent dropdown flickering and ensure smooth appearance */
+    select.input-field {
+        transition: all 0.2s ease-in-out;
+    }
+
+    /* Custom dropdown arrow styling */
+    select.input-field::-ms-expand {
+        display: none;
+    }
+
+    /* Ensure consistent appearance across browsers */
+    select.input-field {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    .card {
+        @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+    }
+
+    .card-hover {
+        @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200;
+    }
+}
