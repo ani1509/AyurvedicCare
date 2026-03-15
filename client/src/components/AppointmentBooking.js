@@ -178,7 +178,7 @@ const AppointmentBooking = ({ doctor, onClose, onSuccess }) => {
     return () => {
       setShownMonths(new Set());
     };
-  }, [consultationMode]);
+  }, [consultationMode, setShownMonths]);
 
   const handleSlotSelect = (slot) => {
     console.log("Slot selected:", slot);

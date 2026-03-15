@@ -80,21 +80,21 @@ const Appointments = () => {
       // Debug logging
       console.log(
         "Fetched appointments from MongoDB:",
-        response.data.appointments
+        response.data.appointments,
       );
       console.log("Number of appointments:", response.data.appointments.length);
       if (response.data.appointments.length > 0) {
         console.log(
           "First appointment structure:",
-          response.data.appointments[0]
+          response.data.appointments[0],
         );
         console.log(
           "First appointment doctor data:",
-          response.data.appointments[0].doctor
+          response.data.appointments[0].doctor,
         );
         console.log(
           "First appointment doctorId:",
-          response.data.appointments[0].doctorId
+          response.data.appointments[0].doctorId,
         );
       }
     } catch (error) {
@@ -114,27 +114,27 @@ const Appointments = () => {
   }, [selectedStatus]);
 
   // Refresh appointments when the page becomes visible
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        fetchAppointments();
-      }
-    };
+  // useEffect(() => {
+  //   const handleVisibilityChange = () => {
+  //     if (!document.hidden) {
+  //       fetchAppointments();
+  //     }
+  //   };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () =>
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, [fetchAppointments]);
+  //   document.addEventListener("visibilitychange", handleVisibilityChange);
+  //   return () =>
+  //     document.removeEventListener("visibilitychange", handleVisibilityChange);
+  // }, [fetchAppointments]);
 
   // Force refresh when page loads
-  useEffect(() => {
-    // Force refresh appointments when page loads
-    const timer = setTimeout(() => {
-      fetchAppointments();
-    }, 100);
+  // useEffect(() => {
+  //   // Force refresh appointments when page loads
+  //   const timer = setTimeout(() => {
+  //     fetchAppointments();
+  //   }, 100);
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, [fetchAppointments]);
 
   // Cleanup timeouts on unmount
   useEffect(() => {
@@ -164,7 +164,7 @@ const Appointments = () => {
     } catch (error) {
       setMessage(
         "Error cancelling appointment: " + error.response?.data?.error ||
-          error.message
+          error.message,
       );
 
       // Auto-hide error messages after 5 seconds
@@ -184,7 +184,7 @@ const Appointments = () => {
     if (appointmentToCancel) {
       await handleCancelAppointment(
         appointmentToCancel.id,
-        "Cancelled by patient"
+        "Cancelled by patient",
       );
       setShowCancelConfirm(false);
       setAppointmentToCancel(null);
@@ -256,6 +256,7 @@ const Appointments = () => {
   };
 
   // Check if a date is within the valid booking range (24 hours - 30 days from today)
+  // eslint-disable-next-line
   const isDateInValidRange = (dateString) => {
     const selectedDate = new Date(dateString);
     const today = new Date();
@@ -391,7 +392,7 @@ const Appointments = () => {
       console.error("Available fields:", Object.keys(appointment));
       console.error("Doctor object:", appointment.doctor);
       setMessage(
-        "Cannot modify appointment: Doctor information is missing. Please contact support."
+        "Cannot modify appointment: Doctor information is missing. Please contact support.",
       );
       const timeoutId = setTimeout(() => {
         setMessage("");
@@ -405,20 +406,20 @@ const Appointments = () => {
       const appointmentDate = new Date(appointment.appointmentDate);
       const today = new Date();
       const hoursUntilAppointment = Math.floor(
-        (appointmentDate - today) / (1000 * 60 * 60)
+        (appointmentDate - today) / (1000 * 60 * 60),
       );
 
       if (hoursUntilAppointment < 0) {
         setMessage(
-          "Cannot modify appointment: The appointment time has already passed."
+          "Cannot modify appointment: The appointment time has already passed.",
         );
       } else if (hoursUntilAppointment < 24) {
         setMessage(
-          `Cannot modify appointment: It's less than 24 hours before the scheduled time (${hoursUntilAppointment} hours remaining).`
+          `Cannot modify appointment: It's less than 24 hours before the scheduled time (${hoursUntilAppointment} hours remaining).`,
         );
       } else {
         setMessage(
-          "Appointments can only be modified up to 24 hours before the scheduled date."
+          "Appointments can only be modified up to 24 hours before the scheduled date.",
         );
       }
 
@@ -527,7 +528,7 @@ const Appointments = () => {
 
     if (selectedDate < twentyFourHoursFromNow) {
       setMessage(
-        "Appointments must be scheduled at least 24 hours in advance."
+        "Appointments must be scheduled at least 24 hours in advance.",
       );
       const timeoutId = setTimeout(() => {
         setMessage("");
@@ -542,7 +543,7 @@ const Appointments = () => {
 
     if (selectedDate > thirtyDaysFromNow) {
       setMessage(
-        "Appointments cannot be scheduled more than 30 days in advance."
+        "Appointments cannot be scheduled more than 30 days in advance.",
       );
       const timeoutId = setTimeout(() => {
         setMessage("");
@@ -556,35 +557,35 @@ const Appointments = () => {
     try {
       console.log(
         "Step 1: Cancelling existing appointment with ID:",
-        appointmentToModify.id
+        appointmentToModify.id,
       );
       console.log(
         "Appointment status before cancellation:",
-        appointmentToModify.status
+        appointmentToModify.status,
       );
 
       // Check if appointment is still in a modifiable state
       if (!["pending", "confirmed"].includes(appointmentToModify.status)) {
         throw new Error(
-          `Cannot modify appointment with status: ${appointmentToModify.status}`
+          `Cannot modify appointment with status: ${appointmentToModify.status}`,
         );
       }
 
       // Verify appointment still exists in database
       try {
         const verifyResponse = await axios.get(
-          `/api/appointments/${appointmentToModify.id}`
+          `/api/appointments/${appointmentToModify.id}`,
         );
         console.log(
           "Appointment verification successful:",
-          verifyResponse.data
+          verifyResponse.data,
         );
 
         if (
           verifyResponse.data.appointment.status !== appointmentToModify.status
         ) {
           throw new Error(
-            `Appointment status has changed from ${appointmentToModify.status} to ${verifyResponse.data.appointment.status}`
+            `Appointment status has changed from ${appointmentToModify.status} to ${verifyResponse.data.appointment.status}`,
           );
         }
 
@@ -599,11 +600,11 @@ const Appointments = () => {
         console.error("Appointment verification failed:", verifyError);
         console.error(
           "Verification error response:",
-          verifyError.response?.data
+          verifyError.response?.data,
         );
         console.error(
           "Verification error status:",
-          verifyError.response?.status
+          verifyError.response?.status,
         );
 
         if (verifyError.response?.status === 404) {
@@ -617,7 +618,7 @@ const Appointments = () => {
         // If it's not a critical error, we can proceed but log the warning
         console.warn(
           "Proceeding with modification despite verification warning:",
-          verifyError.message
+          verifyError.message,
         );
       }
 
@@ -633,18 +634,18 @@ const Appointments = () => {
           `/api/appointments/${appointmentToModify.id}/cancel`,
           {
             reason: "Modified by patient",
-          }
+          },
         );
         console.log("Appointment cancelled successfully:", cancelResponse.data);
       } catch (cancelError) {
         console.error("Appointment cancellation failed:", cancelError);
         console.error(
           "Cancellation error response:",
-          cancelError.response?.data
+          cancelError.response?.data,
         );
         console.error(
           "Cancellation error status:",
-          cancelError.response?.status
+          cancelError.response?.status,
         );
 
         // If cancellation fails, try to get more details about why
@@ -663,11 +664,11 @@ const Appointments = () => {
           throw new Error(
             `Appointment cancellation failed - server error: ${
               serverError || "Unknown server error"
-            }`
+            }`,
           );
         } else {
           throw new Error(
-            `Appointment cancellation failed: ${cancelError.message}`
+            `Appointment cancellation failed: ${cancelError.message}`,
           );
         }
       }
@@ -690,7 +691,7 @@ const Appointments = () => {
 
       console.log(
         "Step 2: Creating new appointment with data:",
-        newAppointmentData
+        newAppointmentData,
       );
       console.log("Doctor ID resolved as:", newAppointmentData.doctorId);
 
@@ -702,11 +703,11 @@ const Appointments = () => {
       try {
         const createResponse = await axios.post(
           "/api/appointments/direct",
-          newAppointmentData
+          newAppointmentData,
         );
         console.log(
           "New appointment created successfully:",
-          createResponse.data
+          createResponse.data,
         );
       } catch (createError) {
         console.error("New appointment creation failed:", createError);
@@ -719,7 +720,7 @@ const Appointments = () => {
           throw new Error(`Failed to create new appointment: ${errorDetail}`);
         } else if (createError.response?.status === 409) {
           throw new Error(
-            "Time slot conflict - the selected time may not be available"
+            "Time slot conflict - the selected time may not be available",
           );
         } else if (createError.response?.status === 500) {
           const serverError =
@@ -728,11 +729,11 @@ const Appointments = () => {
           throw new Error(
             `Failed to create new appointment - server error: ${
               serverError || "Unknown server error"
-            }`
+            }`,
           );
         } else {
           throw new Error(
-            `Failed to create new appointment: ${createError.message}`
+            `Failed to create new appointment: ${createError.message}`,
           );
         }
       }
@@ -957,7 +958,7 @@ const Appointments = () => {
                   </div>
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                      appointment.status
+                      appointment.status,
                     )}`}
                   >
                     {appointment.status.charAt(0).toUpperCase() +
