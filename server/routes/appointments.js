@@ -36,23 +36,23 @@ router.post(
         return res.status(404).json({ error: "Slot not found" });
       }
 
-      console.log("Slot found:", {
-        id: slot._id,
-        status: slot.status,
-        bookedBy: slot.bookedBy,
-        userId: req.user._id,
-      });
+      // console.log("Slot found:", {
+      //   id: slot._id,
+      //   status: slot.status,
+      //   bookedBy: slot.bookedBy,
+      //   userId: req.user._id,
+      // });
 
       if (
         slot.status !== "booked" ||
         slot.bookedBy.userId.toString() !== req.user._id.toString()
       ) {
-        console.log("Slot validation failed:", {
-          expectedStatus: "booked",
-          actualStatus: slot.status,
-          expectedUserId: req.user._id,
-          actualUserId: slot.bookedBy?.userId,
-        });
+        // console.log("Slot validation failed:", {
+        //   expectedStatus: "booked",
+        //   actualStatus: slot.status,
+        //   expectedUserId: req.user._id,
+        //   actualUserId: slot.bookedBy?.userId,
+        // });
         return res.status(400).json({ error: "Slot is not booked by you" });
       }
 
@@ -99,7 +99,7 @@ router.post(
         },
       });
     } catch (error) {
-      console.error("Create appointment error:", error);
+      // console.error("Create appointment error:", error);
       res.status(500).json({ error: "Server error" });
     }
   }
@@ -193,7 +193,7 @@ router.post(
         },
       });
     } catch (error) {
-      console.error("Create direct appointment error:", error);
+      // console.error("Create direct appointment error:", error);
       res.status(500).json({ error: "Server error" });
     }
   }
@@ -251,10 +251,10 @@ router.get(
       // Get total count for pagination
       const total = await Appointment.countDocuments(filterQuery);
 
-      console.log("Raw appointments from database:", appointments);
+      // console.log("Raw appointments from database:", appointments);
       if (appointments.length > 0) {
-        console.log("First appointment raw data:", appointments[0]);
-        console.log("First appointment doctorId:", appointments[0].doctorId);
+        // console.log("First appointment raw data:", appointments[0]);
+        // console.log("First appointment doctorId:", appointments[0].doctorId);
       }
 
       res.json({
@@ -286,7 +286,7 @@ router.get(
         },
       });
     } catch (error) {
-      console.error("Get appointments error:", error);
+      // console.error("Get appointments error:", error);
       res.status(500).json({ error: "Server error" });
     }
   }
@@ -353,7 +353,7 @@ router.get("/:id", authenticate, async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Get appointment error:", error);
+    // console.error("Get appointment error:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
@@ -439,7 +439,7 @@ router.put(
         },
       });
     } catch (error) {
-      console.error("Cancel appointment error:", error);
+      // console.error("Cancel appointment error:", error);
       res.status(500).json({ error: "Server error" });
     }
   }
@@ -534,7 +534,7 @@ router.put(
         },
       });
     } catch (error) {
-      console.error("Reschedule appointment error:", error);
+      // console.error("Reschedule appointment error:", error);
       res.status(500).json({ error: "Server error" });
     }
   }
@@ -612,7 +612,7 @@ router.put(
         },
       });
     } catch (error) {
-      console.error("Complete appointment error:", error);
+      // console.error("Complete appointment error:", error);
       res.status(500).json({ error: "Server error" });
     }
   }
@@ -699,7 +699,7 @@ router.post(
         rating: appointment.rating,
       });
     } catch (error) {
-      console.error("Rate appointment error:", error);
+      // console.error("Rate appointment error:", error);
       res.status(500).json({ error: "Server error" });
     }
   }
