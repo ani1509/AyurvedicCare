@@ -17,7 +17,8 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const from = location.state?.from?.pathname || "/";
+  // const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/appointments";
 
   const onSubmit = async (data) => {
     setIsLoading(true);
