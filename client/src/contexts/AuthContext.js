@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+axios.defaults.baseURL = "https://ayurvediccare-backend.onrender.com";
+
 const AuthContext = createContext();
 
 export const useAuth = () => {
