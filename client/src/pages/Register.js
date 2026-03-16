@@ -38,12 +38,31 @@ const Register = () => {
     }
   }, [selectedRole, setValue]);
 
+  // const onSubmit = async (data) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const result = await registerUser(data);
+  //     if (result.success) {
+  //       navigate("/");
+  //     }
+  //   } catch (error) {
+  //     console.error("Registration error:", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const onSubmit = async (data) => {
     setIsLoading(true);
+
     try {
       const result = await registerUser(data);
+
       if (result.success) {
-        navigate("/");
+        navigate("/appointments", { replace: true });
+
+        // ensure navbar + auth state updates
+        window.location.reload();
       }
     } catch (error) {
       console.error("Registration error:", error);
@@ -51,7 +70,7 @@ const Register = () => {
       setIsLoading(false);
     }
   };
-
+  
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">

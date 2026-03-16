@@ -20,12 +20,31 @@ const Login = () => {
   // const from = location.state?.from?.pathname || "/";
   const from = location.state?.from?.pathname || "/appointments";
 
+  // const onSubmit = async (data) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const result = await login(data.email, data.password);
+  //     if (result.success) {
+  //       navigate(from, { replace: true });
+  //     }
+  //   } catch (error) {
+  //     console.error("Login error:", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const onSubmit = async (data) => {
     setIsLoading(true);
+
     try {
       const result = await login(data.email, data.password);
+
       if (result.success) {
         navigate(from, { replace: true });
+
+        // ensures user state refresh
+        window.location.reload();
       }
     } catch (error) {
       console.error("Login error:", error);
